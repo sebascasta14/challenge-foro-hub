@@ -33,16 +33,24 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoTopico>> listadoTopicos(@PageableDefault(size = 2) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListadoTopico>> listadoTopicos(@PageableDefault(size = 7) Pageable paginacion) {
 //        return medicoRepository.findAll(paginacion).map(DatosListadoTopico::new);
         return ResponseEntity.ok(topicoRepository.findByStatusTrue(paginacion).map(DatosListadoTopico::new));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosRespuestaTopico> retornaDatosTopico(@PathVariable Long id) {
+    public ResponseEntity<DatosEspecificoTopico> retornaDatosTopico(@PathVariable Long id) {
         Topico topico = topicoRepository.getReferenceById(id);
-        var datosTopicos = new DatosRespuestaTopico(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion().toString());
-        return ResponseEntity.ok(datosTopicos);
+        var datosTopico = new DatosEspecificoTopico(
+                topico.getId(),
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getFechaCreacion().toString(),
+                topico.getStatus().toString(),
+                topico.getAutor(),
+                topico.getCurso()
+        );
+        return ResponseEntity.ok(datosTopico);
     }
 
 }

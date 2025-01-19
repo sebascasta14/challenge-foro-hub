@@ -5,4 +5,5 @@ public record DatosRespuestaTopico(
         String titulo,
         String mensaje,
         String fechaCreacion
-) {}
+) {
+}
