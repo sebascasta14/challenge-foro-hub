@@ -1,4 +1,11 @@
 package com.challenge.challenge_foro_hub.domain.usuarios;
 
-public record DatosAutenticacionUsuario(String username, String password) {
+import jakarta.validation.constraints.NotBlank;
+
+public record DatosAutenticacionUsuario(
+        @NotBlank
+        String username,
+        @NotBlank
+        String password
+) {
 }

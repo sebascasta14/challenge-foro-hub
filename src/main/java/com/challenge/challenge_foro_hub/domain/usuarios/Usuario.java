@@ -1,5 +1,6 @@
 package com.challenge.challenge_foro_hub.domain.usuarios;
 
+import com.challenge.challenge_foro_hub.domain.topicos.Topico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "users")
-@Entity(name = "User")
+@Table(name = "autores")
+@Entity(name = "Autor")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +24,8 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    @Column(unique = true)
     private String username;
     private String password;
 
