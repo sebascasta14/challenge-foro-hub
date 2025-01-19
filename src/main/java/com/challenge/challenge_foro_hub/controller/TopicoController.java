@@ -58,7 +58,7 @@ public class TopicoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid DatosActualizarTopico datosActualizarTopico) {
-        Optional<Topico> topicoOptional  = topicoRepository.findById(id);
+        Optional<Topico> topicoOptional = topicoRepository.findById(id);
         if (topicoOptional .isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -73,5 +73,18 @@ public class TopicoController {
                 topico.getStatus().toString(),
                 topico.getAutor(),
                 topico.getCurso()));
+    }
+
+    // DELETE LOGICO
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity eliminarTopico(@PathVariable Long id) {
+        Optional<Topico> topicoOptional = topicoRepository.findById(id);
+        if (topicoOptional .isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Topico topico = topicoOptional.get();
+        topico.desactivarTopico();
+        return ResponseEntity.noContent().build();
     }
 }

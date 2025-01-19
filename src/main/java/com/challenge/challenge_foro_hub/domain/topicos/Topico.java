@@ -47,4 +47,8 @@ public class Topico {
             this.curso = datosActualizarTopico.curso();
         }
     }
+
+    public void desactivarTopico() {
+        this.status = false;
+    }
 }
