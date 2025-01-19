@@ -2,6 +2,7 @@ package com.challenge.challenge_foro_hub.controller;
 
 import com.challenge.challenge_foro_hub.domain.topicos.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Optional;
 
 
 @RestController
@@ -53,4 +55,23 @@ public class TopicoController {
         return ResponseEntity.ok(datosTopico);
     }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid DatosActualizarTopico datosActualizarTopico) {
+        Optional<Topico> topicoOptional  = topicoRepository.findById(id);
+        if (topicoOptional .isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Topico topico = topicoOptional.get();
+        topico.actualizarDatos(datosActualizarTopico);
+        return ResponseEntity.ok(new DatosEspecificoTopico(
+                topico.getId(),
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getFechaCreacion().toString(),
+                topico.getStatus().toString(),
+                topico.getAutor(),
+                topico.getCurso()));
+    }
 }

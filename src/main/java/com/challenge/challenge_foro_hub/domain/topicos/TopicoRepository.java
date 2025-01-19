@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface TopicoRepository extends JpaRepository<Topico, Long> {
     Page<Topico> findByStatusTrue(Pageable paginacion);
+    Optional<Topico> findById(Long id);
 }
